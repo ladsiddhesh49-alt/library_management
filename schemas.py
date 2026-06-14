@@ -1,6 +1,4 @@
 from pydantic import BaseModel
-from typing import Optional
-
 
 class UserCreate(BaseModel):
     name: str
@@ -20,11 +18,15 @@ class BookCreate(BaseModel):
     author: str
     isbn: str
     total_copies: int
-    available_copies: int
 
 
-class BookResponse(BookCreate):
+class BookResponse(BaseModel):
     id: int
+    title: str
+    author: str
+    isbn: str
+    total_copies: int
+    available_copies: int
 
     class Config:
         from_attributes = True

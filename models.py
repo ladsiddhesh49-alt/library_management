@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -7,7 +7,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    email = Column(String, unique=True, index=True)
+    email = Column(String, unique=True)
     is_librarian = Column(Boolean, default=False)
 
     transactions = relationship("Transaction", back_populates="user")
@@ -30,10 +30,13 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     id = Column(Integer, primary_key=True, index=True)
+
     user_id = Column(Integer, ForeignKey("users.id"))
     book_id = Column(Integer, ForeignKey("books.id"))
+
     borrow_date = Column(DateTime)
     return_date = Column(DateTime, nullable=True)
+
     status = Column(String)
 
     user = relationship("User", back_populates="transactions")
